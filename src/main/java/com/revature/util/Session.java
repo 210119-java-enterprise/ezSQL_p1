@@ -1,5 +1,7 @@
 package com.revature.util;
 
+import com.revature.reflectors.Metamodel;
+
 import java.sql.Connection;
 
 /**
@@ -8,12 +10,22 @@ import java.sql.Connection;
 public class Session {
 
     private Connection connection;
+    private static MetamodelManager metamodelManager;
 
-    public Session(Connection connection){
+    public Session(Connection connection, MetamodelManager metamodelManager){
         if (connection == null)
-            throw new ExceptionInInitializerError("Impossible");
+            throw new ExceptionInInitializerError("Session created with null connection.");
 
         this.connection = connection;
+        this.metamodelManager = metamodelManager;
+    }
+
+    public static MetamodelManager getMetamodelManager() {
+        return metamodelManager;
+    }
+
+    public static void setMetamodelManager(MetamodelManager metamodelManager) {
+        Session.metamodelManager = metamodelManager;
     }
 
     public Connection getConnection(){
@@ -22,6 +34,10 @@ public class Session {
 
     public void setConnection(Connection connection){
         this.connection = connection;
+    }
+
+    public void addAnnotatedClass(Class c){
+        metamodelManager.addMetaModel(Metamodel.of(c));
     }
 
     public int add (Class<?> clazz){

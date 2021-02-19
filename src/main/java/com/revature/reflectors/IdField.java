@@ -10,7 +10,8 @@ public class IdField {
 
     public IdField(Field field){
         if (field.getAnnotation(Id.class) == null){
-            throw new IllegalStateException("Error");
+            throw new IllegalStateException("Cannot create IdField object! Provided field, "
+                                            + getName() + "is not annotated with @PrimaryKey");
         }
         this.field = field;
     }
