@@ -7,6 +7,6 @@ import java.lang.annotation.Target;
 
 @Target(ElementType.FIELD)
 @Retention(RetentionPolicy.RUNTIME)
-public @interface Id {
-    String columnName();
+public @interface PrimaryKey {
+    String primaryKey();
 }

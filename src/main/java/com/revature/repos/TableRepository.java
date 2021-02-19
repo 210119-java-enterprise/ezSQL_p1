@@ -4,7 +4,7 @@ import java.util.List;
 
 public class TableRepository<T> implements CrudRepository {
 
-    private final String base = "Select * " +
+    private final String base = "Select (?) " +
                                 "FROM (?) ";
 
     private String sql;

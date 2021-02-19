@@ -16,7 +16,29 @@ public class Session {
         this.connection = connection;
     }
 
-    public void establishConnection(){
+    public Connection getConnection(){
+        return connection;
+    }
+
+    public void setConnection(Connection connection){
+        this.connection = connection;
+    }
+
+    public int add (Class<?> clazz){
+        return 1;
+    }
+
+    public void remove (Class<?> clazz){
 
     }
+
+    public void update (Class<?> clazz){
+
+    }
+
+    public Class<?> read (Class<?> clazz){
+
+        return null;
+    }
+
 }
