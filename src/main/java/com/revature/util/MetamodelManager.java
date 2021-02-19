@@ -12,7 +12,7 @@ public class MetamodelManager {
         super();
     }
 
-    public void addMetaModel(Object o){
-
+    public void addMetaModel(Metamodel metamodel){
+        metamodelList.add(metamodel);
     }
 }

@@ -11,6 +11,7 @@ public class Session {
 
     private Connection connection;
     private static MetamodelManager metamodelManager;
+    private Metamodel<?> metamodel;
 
     public Session(Connection connection, MetamodelManager metamodelManager){
         if (connection == null)
@@ -38,6 +39,7 @@ public class Session {
 
     public void addAnnotatedClass(Class c){
         metamodelManager.addMetaModel(Metamodel.of(c));
+        metamodel = Metamodel.of(c);
     }
 
     public int add (Class<?> clazz){
