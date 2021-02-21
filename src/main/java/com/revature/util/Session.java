@@ -2,7 +2,9 @@ package com.revature.util;
 
 import com.revature.reflectors.Metamodel;
 
+import java.nio.file.Path;
 import java.sql.Connection;
+import java.util.List;
 
 /**
  * Session information pertains to information unique to each individual logging into the given Database.
@@ -10,39 +12,36 @@ import java.sql.Connection;
 public class Session {
 
     private Connection connection;
-    private static MetamodelManager metamodelManager;
-    private Metamodel<?> metamodel;
+    private List<Metamodel<Class<?>>> metamodelList;
+    private static ConnectionFactory connectionFactory;
+    private Session mySession;
 
-    public Session(Connection connection, MetamodelManager metamodelManager){
+    public Session(Path p){
+        connectionFactory.startConnection(p);
         if (connection == null)
             throw new ExceptionInInitializerError("Session created with null connection.");
 
         this.connection = connection;
-        this.metamodelManager = metamodelManager;
-    }
-
-    public static MetamodelManager getMetamodelManager() {
-        return metamodelManager;
-    }
-
-    public static void setMetamodelManager(MetamodelManager metamodelManager) {
-        Session.metamodelManager = metamodelManager;
-    }
-
-    public Connection getConnection(){
-        return connection;
-    }
-
-    public void setConnection(Connection connection){
-        this.connection = connection;
     }
 
     public void addAnnotatedClass(Class c){
-        metamodelManager.addMetaModel(Metamodel.of(c));
-        metamodel = Metamodel.of(c);
+        metamodelList.add(Metamodel.of(c));
+    }
+
+    public List<Metamodel<Class<?>>> getMetamodelList() {
+        return metamodelList;
+    }
+
+    public Metamodel<Class<?>> getClass(Class<?> clazz){
+        for (Metamodel<Class<?>> metamodel : metamodelList)
+            if (metamodel.getClassName().equals(clazz.getSimpleName()))
+                return metamodel;
+
+        return null;
     }
 
     public int add (Class<?> clazz){
+
         return 1;
     }
 
@@ -57,6 +56,14 @@ public class Session {
     public Class<?> read (Class<?> clazz){
 
         return null;
+    }
+
+    public Connection getConnection(){
+        return connection;
+    }
+
+    public void setConnection(Connection connection){
+        this.connection = connection;
     }
 
 }

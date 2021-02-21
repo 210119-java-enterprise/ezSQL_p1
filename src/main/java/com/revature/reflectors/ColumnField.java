@@ -28,4 +28,7 @@ public class ColumnField {
         return field.getAnnotation(Column.class).columnName();
     }
 
+    public Field getField() {
+        return field;
+    }
 }

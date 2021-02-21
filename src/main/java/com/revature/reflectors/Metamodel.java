@@ -1,12 +1,12 @@
 package com.revature.reflectors;
 
 import com.revature.annotations.Column;
+import com.revature.annotations.Entity;
 import com.revature.annotations.PrimaryKey;
 import com.revature.annotations.Table;
 
 import java.lang.reflect.Field;
 import java.util.ArrayList;
-import java.util.LinkedList;
 import java.util.List;
 import java.util.Objects;
 
@@ -94,6 +94,9 @@ public class Metamodel<T> {
 
         return null;
     }
+
+    public String getEntityName() { return clazz.getAnnotation(Entity.class).tableName(); }
+
 
     @Override
     public boolean equals(Object o) {

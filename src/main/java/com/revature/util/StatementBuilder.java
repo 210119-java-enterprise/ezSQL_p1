@@ -9,9 +9,9 @@ public class StatementBuilder {
     private final String from = "FROM ";
     private final String update = "UPDATE ";
     private final String delete = "DELETE ";
-    private final String insert = "INSERT ";
+    private final String insert = "INSERT INTO ";
     private final String where = "WHERE ";
-    private Restrictions restriction;
+    private final String values = "VALUES ";
 
     public StatementBuilder(Metamodel<?> metamodel, Object o){}
 
@@ -19,13 +19,30 @@ public class StatementBuilder {
         return query;
     }
 
+    public void putThat(String that) { query += that; }
+
     public void selectAll(){
         query = select + " * " + from + " (?) ";
     }
 
-    public void selectConditional(String condition){
-        query = select + condition + from + " (?) " + where + condition;
+    public void addConditional(String condition){
+        query += condition;
     }
 
+    public void addInsertable() { query += " (?) "; }
+
+    public void select() { query = select; }
+
+    public void from(){ query += from; }
+
+    public void update(){ query += update; }
+
+    public void delete(){ query += delete; }
+
+    public void insert(){ query += insert; }
+
+    public void where(){ query += where; }
+
+    public void values(){ query += values; }
 
 }

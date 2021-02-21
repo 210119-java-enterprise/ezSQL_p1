@@ -1,13 +1,14 @@
 package com.revature.repos;
 
-import java.util.List;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 
 public interface CrudRepository<T> {
 
-    void save(T newObj);
-    List<T> findAll();
-    T findById(int id);
-    boolean update(T updateObj);
-    boolean deleteById(int id);
+    void save(String sql);
+    ResultSet findAll(String sql);
+    ResultSet findById(String sql);
+    boolean update(String sql);
+    boolean deleteById(String sql);
 
 }
