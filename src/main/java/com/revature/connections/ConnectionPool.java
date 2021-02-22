@@ -8,6 +8,11 @@ import java.util.List;
 
 /**
  * Simple implementation of a Connection Pool
+ * This is yet to be integrated into the project: Fixes necessary for core functionality
+ * take precedent before implementing the Pool.
+ *
+ * Credits: https://www.baeldung.com/java-connection-pooling
+ * Authored by Baeldung.
  */
 public class ConnectionPool implements SkeletonPool{
     private String url;

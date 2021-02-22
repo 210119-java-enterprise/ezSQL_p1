@@ -12,6 +12,11 @@ import java.sql.SQLException;
  * The TableRepository class performs actions on the database directly.
  * They do this by accessing the Connection from the connectionFactory.
  * The Table Repository should be able to insert, remove, add, and update.
+ * These functions do not themselves contain the logic for their calls.
+ * They take in Statements to execute, and should return corresponding values
+ * that are determined by their type of call.
+ *
+ * Save will not pass back values, FindAll should return a ResultSet to be mapped. Etc.
  */
 public class TableRepository<T> implements CrudRepository {
 
@@ -26,7 +31,8 @@ public class TableRepository<T> implements CrudRepository {
     public void save(String sql) {
         try (Connection conn = ConnectionFactory.getInstance().getConnection()) {
             PreparedStatement pstm = conn.prepareStatement(sql);
-            rs = pstm.executeQuery();
+
+            pstm.executeUpdate();
         } catch (SQLException e) {
             e.printStackTrace();
         }

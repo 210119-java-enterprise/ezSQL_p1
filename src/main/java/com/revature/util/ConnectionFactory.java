@@ -30,8 +30,9 @@ public class ConnectionFactory {
 
     }
 
-    public void startConnection(Path p){
+    public static Session startConnection(Path p){
         connectionFactory = new ConnectionFactory(p);
+        return new Session(getConnection());
     }
 
     public static ConnectionFactory getInstance(){

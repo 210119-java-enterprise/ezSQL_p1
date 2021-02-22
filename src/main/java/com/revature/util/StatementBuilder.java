@@ -12,6 +12,7 @@ public class StatementBuilder {
     private final String insert = "INSERT INTO ";
     private final String where = "WHERE ";
     private final String values = "VALUES ";
+    private final String set = "SET ";
 
     public StatementBuilder(Metamodel<?> metamodel, Object o){}
 
@@ -44,5 +45,7 @@ public class StatementBuilder {
     public void where(){ query += where; }
 
     public void values(){ query += values; }
+
+    public void set(){ query += set; }
 
 }

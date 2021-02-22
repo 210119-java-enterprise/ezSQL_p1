@@ -4,6 +4,7 @@ import com.revature.reflectors.Metamodel;
 
 import java.nio.file.Path;
 import java.sql.Connection;
+import java.util.LinkedList;
 import java.util.List;
 
 /**
@@ -15,13 +16,17 @@ public class Session {
     private List<Metamodel<Class<?>>> metamodelList;
     private static ConnectionFactory connectionFactory;
     private Session mySession;
+    private StatementExecutor statementExecutor;
 
-    public Session(Path p){
-        connectionFactory.startConnection(p);
+    public Session(Connection connection){
         if (connection == null)
             throw new ExceptionInInitializerError("Session created with null connection.");
 
         this.connection = connection;
+        statementExecutor = new StatementExecutor(this);
+        metamodelList = new LinkedList<>();
+
+
     }
 
     public void addAnnotatedClass(Class c){
@@ -32,30 +37,40 @@ public class Session {
         return metamodelList;
     }
 
-    public Metamodel<Class<?>> getClass(Class<?> clazz){
-        for (Metamodel<Class<?>> metamodel : metamodelList)
-            if (metamodel.getClassName().equals(clazz.getSimpleName()))
+    public Metamodel<?> getClass(Object obj){
+        for (Metamodel<?> metamodel : metamodelList)
+            if (!obj.getClass().getName().equals(metamodel.getClassName()))
                 return metamodel;
 
         return null;
     }
 
-    public int add (Class<?> clazz){
+    public <T> int add (T obj) throws IllegalAccessException {
+        if (obj.getClass() == null){
+            throw new NullPointerException(" The object provided does not have a class, or is null.");
+        }
+        Metamodel<?> metamodel = getClass(obj.getClass());
 
+        statementExecutor.insert(metamodel, obj);
         return 1;
     }
 
-    public void remove (Class<?> clazz){
+    public <T> void remove (T obj) throws IllegalAccessException {
+        if (obj.getClass() == null){
+            throw new NullPointerException(" The object provided does not have a class, or is null.");
+        }
+        Metamodel<?> metamodel = getClass(obj.getClass());
 
+        statementExecutor.remove(metamodel, obj);
     }
 
-    public void update (Class<?> clazz){
+    public <T> boolean update (T objOld, T objNew) throws Exception {
+        if (objNew == objOld)
+            throw new Exception("Objects passed are the same.");
 
-    }
+        Metamodel<?> metamodel = getClass(objNew.getClass());
 
-    public Class<?> read (Class<?> clazz){
-
-        return null;
+        return statementExecutor.update(objOld, objNew, metamodel);
     }
 
     public Connection getConnection(){

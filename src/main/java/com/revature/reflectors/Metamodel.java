@@ -3,7 +3,6 @@ package com.revature.reflectors;
 import com.revature.annotations.Column;
 import com.revature.annotations.Entity;
 import com.revature.annotations.PrimaryKey;
-import com.revature.annotations.Table;
 
 import java.lang.reflect.Field;
 import java.util.ArrayList;
@@ -19,9 +18,9 @@ public class Metamodel<T> {
     }
 
     public static <T> Metamodel of(Class<T> clazz){
-        if (clazz.getAnnotation(Table.class) == null){
+        if (clazz.getAnnotation(Entity.class) == null){
             throw new IllegalStateException("Cannot create Metamodel object! Provided class, "
-                    + clazz.getName() + "is not annotated with @Entity");
+                    + clazz.getName() + " is not annotated with @Entity");
         }
         return new Metamodel<T>(clazz);
     }

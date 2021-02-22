@@ -4,6 +4,11 @@ import com.revature.annotations.PrimaryKey;
 
 import java.lang.reflect.Field;
 
+/**
+ * IdField organizes meta information related to Fields tagged with @PrimaryKey by the user.
+ * This will allow StatementExecutor to parse information by pulling field names, types, annotations, etc.
+ * TODO: Implement alongside Primary Keys.
+ */
 public class IdField {
 
     private Field field;
