@@ -6,12 +6,10 @@ import java.lang.annotation.RetentionPolicy;
 import java.lang.annotation.Target;
 
 /**
- * Column Annotation used for marking which fields will be used
- * as columns within a database. This is to access data to populate the
- * database.
+ * Entity tag to mark which classes need to be considered a Table for data.
  */
 @Retention(RetentionPolicy.RUNTIME)
-@Target(ElementType.FIELD)
-public @interface Column {
-    String columnName();
+@Target(ElementType.TYPE)
+public @interface Entity {
+    String tableName();
 }

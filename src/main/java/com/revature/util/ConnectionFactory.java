@@ -10,7 +10,8 @@ import java.util.Properties;
 
 public class ConnectionFactory {
 
-    private Properties props = new Properties();
+    private static ConnectionFactory connectionFactory = null;
+    private static Properties props = new Properties();
 
     static {
         try {
@@ -20,21 +21,25 @@ public class ConnectionFactory {
         }
     }
 
-    private ConnectionFactory (Path properties){
+    private ConnectionFactory (Path p){
         try {
-            props.load(new FileReader(String.valueOf(properties)));
+            props.load(new FileReader(String.valueOf(p)));
         } catch (IOException e) {
             e.printStackTrace();
         }
+
     }
 
-    public ConnectionFactory establishConnection(Path properties){
-        ConnectionFactory connect = new ConnectionFactory(properties);
-
-        return connect;
+    public static Session startConnection(Path p){
+        connectionFactory = new ConnectionFactory(p);
+        return new Session(getConnection());
     }
 
-    public Connection getConnection() {
+    public static ConnectionFactory getInstance(){
+        return connectionFactory;
+    }
+
+    public static Connection getConnection() {
         Connection conn = null;
 
         try {
