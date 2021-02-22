@@ -4,9 +4,9 @@ The intention of this tool is to skip the middle man of establishing jdbc calls.
 
 ## Using ezSQL
 To use ezSQL, using a Maven project, include the following within a dependency tag:
-<groupId> com.revature </groupId>
-<artifactId>ezSQL</artifactId>
-<version>1.0-SNAPSHOT</version>
+groupId: com.revature 
+artifactId: ezSQL
+version: 1.0-SNAPSHOT
         
 Tags to use when utilizing ezSQL are as follows:
 @Entity (tableName = "Example")
